@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for node in $(knife search node "ec2:* AND ohai_time:[* TO $(date +%s -d '3 days ago')]" -i); do
+for node in $(knife search node "(ec2:* OR system:openstack) AND ohai_time:[* TO $(date +%s -d '3 days ago')]" -i); do
   nslookup $node > /dev/null 2>&1
   status=$( echo $? )
   if [[ $status == 1 ]] ; then
